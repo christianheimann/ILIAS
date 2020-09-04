@@ -626,13 +626,12 @@ class ilBlogPostingGUI extends ilPageObjectGUI
     }
 
     
-    public function observeNoteAction($a_blog_id, $a_posting_id, $a_type, $a_action, $a_note_id)
+    public function observeNoteAction($a_blog_id, $a_posting_id, $a_type, $a_news_id, $a_action, $a_note_id)
     {
         // #10040 - get note text
         include_once "Services/Notes/classes/class.ilNote.php";
         $note = new ilNote($a_note_id);
         $note = $note->getText();
-        
         include_once "Modules/Blog/classes/class.ilObjBlog.php";
         ilObjBlog::sendNotification("comment", $this->isInWorkspace(), $this->node_id, $a_posting_id, $note);
     }
@@ -907,8 +906,8 @@ class ilBlogPostingGUI extends ilPageObjectGUI
         $shrink_ratio = min($ratio_width, $ratio_height);
                         
         return array(
-            (int) round($src_width*$shrink_ratio),
-            (int) round($src_height*$shrink_ratio)
+            (int) round($src_width * $shrink_ratio),
+            (int) round($src_height * $shrink_ratio)
         );
     }
 

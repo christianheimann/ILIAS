@@ -265,7 +265,8 @@ class ilObjAuthSettingsGUI extends ilObjectGUI
             $this->ilias->raiseError($this->lng->txt("auth_err_no_mode_selected"), $this->ilias->error_obj->MESSAGE);
         }
 
-        if ($_POST["auth_mode"] == AUTH_DEFAULT) {
+        $current_auth_mode = $ilSetting->get('auth_mode','');
+        if ($_POST["auth_mode"] == $current_auth_mode) {
             ilUtil::sendInfo($this->lng->txt("auth_mode") . ": " . $this->getAuthModeTitle() . " " . $this->lng->txt("auth_mode_not_changed"), true);
             $this->ctrl->redirect($this, 'authSettings');
         }
@@ -284,8 +285,9 @@ class ilObjAuthSettingsGUI extends ilObjectGUI
                 }
                 */
                 break;
-                
-                case AUTH_SHIB:
+
+            // @fix changed from AUTH_SHIB > is not defined
+            case AUTH_SHIBBOLETH:
                 if ($this->object->checkAuthSHIB() !== true) {
                     ilUtil::sendFailure($this->lng->txt("auth_shib_not_configured"), true);
                     ilUtil::redirect($this->getReturnLocation("authSettings", $this->ctrl->getLinkTarget($this, "editSHIB", "", false, false)));

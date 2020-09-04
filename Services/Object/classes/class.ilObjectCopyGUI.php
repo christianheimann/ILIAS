@@ -391,7 +391,7 @@ class ilObjectCopyGUI
             array_merge(
                 ilParticipants::_getMembershipByType($user->getId(), 'crs', false),
                 ilParticipants::_getMembershipByType($user->getId(), 'grp', false)
-            )
+                )
         );
         $cgs->parse();
 
@@ -423,7 +423,7 @@ class ilObjectCopyGUI
         //
         include_once("./Services/Repository/classes/class.ilRepositorySelectorExplorerGUI.php");
         $exp = new ilRepositorySelectorExplorerGUI($this, "showTargetSelectionTree");
-        $exp->setTypeWhiteList(array("root", "cat", "grp", "crs", "fold", "lso"));
+        $exp->setTypeWhiteList(array("root", "cat", "grp", "crs", "fold", "lso", "prg"));
         $exp->setSelectMode("target", true);
         if ($exp->handleCommand()) {
             return;
@@ -434,13 +434,27 @@ class ilObjectCopyGUI
         $t = new ilToolbarGUI();
         $t->setFormAction($ilCtrl->getFormAction($this, "saveTarget"));
         if ($objDefinition->isContainer($this->getType())) {
-            $t->addFormButton($lng->txt("btn_next"), "saveTarget");
+            $btn = ilSubmitButton::getInstance();
+            $btn->setCaption('btn_next');
+            $btn->setCommand('saveTarget');
+            $btn->setPrimary(true);
+            $t->addButtonInstance($btn);
         } else {
-            $t->addFormButton($lng->txt("paste"), "saveTarget");
+            $btn = ilSubmitButton::getInstance();
+            $btn->setCaption('paste');
+            $btn->setCommand('saveTarget');
+            $btn->setPrimary(true);
+            $t->addButtonInstance($btn);
         }
         $t->addSeparator();
-        $t->addFormButton($lng->txt("obj_insert_into_clipboard"), "keepObjectsInClipboard");
-        $t->addFormButton($lng->txt("cancel"), "cancel");
+        $clipboard_btn = ilSubmitButton::getInstance();
+        $clipboard_btn->setCaption('obj_insert_into_clipboard');
+        $clipboard_btn->setCommand('keepObjectsInClipboard');
+        $t->addButtonInstance($clipboard_btn);
+        $cancel_btn = ilSubmitButton::getInstance();
+        $cancel_btn->setCaption('cancel');
+        $cancel_btn->setCommand('cancel');
+        $t->addButtonInstance($cancel_btn);
         $t->setCloseFormTag(false);
         $t->setLeadingImage(ilUtil::getImagePath("arrow_upright.svg"), " ");
         $output = $t->getHTML() . $output;
@@ -562,7 +576,7 @@ class ilObjectCopyGUI
                             $this->lng->txt('msg_obj_may_not_contain_objects_of_type'),
                             $this->lng->txt('obj_' . $target_type),
                             $this->lng->txt('obj_' . $source_type)
-                        )
+                            )
                     );
                     $this->showTargetSelectionTree();
                     return false;
@@ -857,7 +871,7 @@ class ilObjectCopyGUI
                                 $this->lng->txt('msg_obj_may_not_contain_objects_of_type'),
                                 $this->lng->txt('obj_' . $target_type),
                                 $this->lng->txt('obj_' . $source_type)
-                            )
+                                )
                         );
                         $this->searchSource();
                         return false;

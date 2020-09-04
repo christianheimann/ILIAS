@@ -94,10 +94,10 @@ class ilObjCourseListGUI extends ilObjectListGUI
             !ilObject::lookupOfflineStatus($this->obj_id)
         ) {
             $showRegistrationInfo = false;
-            $props[]              = array(
-                "alert"    => true,
+            $props[] = array(
+                "alert" => true,
                 "property" => $lng->txt("status"),
-                "value"    => $lng->txt("offline")
+                "value" => $lng->txt("offline")
             );
         }
 
@@ -140,9 +140,9 @@ class ilObjCourseListGUI extends ilObjectListGUI
         include_once './Modules/Course/classes/class.ilCourseWaitingList.php';
         if (ilCourseWaitingList::_isOnList($ilUser->getId(), $this->obj_id)) {
             $props[] = array(
-                "alert" 	=> true,
-                "property" 	=> $lng->txt('member_status'),
-                "value"		=> $lng->txt('on_waiting_list')
+                "alert" => true,
+                "property" => $lng->txt('member_status'),
+                "value" => $lng->txt('on_waiting_list')
             );
         }
         
@@ -163,7 +163,7 @@ class ilObjCourseListGUI extends ilObjectListGUI
             $lng->loadLanguageModule('certificate');
             $cmd_link = "ilias.php?baseClass=ilRepositoryGUI&amp;ref_id=" . $this->ref_id .
                     "&amp;cmd=deliverCertificate";
-            $props[] = array("alert" => false, "property" => $lng->txt("passed"),
+            $props[] = array("alert" => false, 
                 "value" => '<a href="' . $cmd_link . '">' . $lng->txt("download_certificate") . '</a>');
         }
 

@@ -966,7 +966,7 @@ class ilObjectListGUI
      * @param
      * @return
      */
-    public function checkCommandAccess($a_permission, $a_cmd, $a_ref_id, $a_type, $a_obj_id="")
+    public function checkCommandAccess($a_permission, $a_cmd, $a_ref_id, $a_type, $a_obj_id = "")
     {
         $ilAccess = $this->access;
         
@@ -1225,7 +1225,7 @@ class ilObjectListGUI
                             "alert" => false,
                             "property" => $lng->txt("in_use_by"),
                             "value" => $lock_user->getLogin(),
-                            "link" => 	"./ilias.php?user=" . $lock_user->getId() . '&cmd=showUserProfile&cmdClass=ilpersonaldesktopgui&baseClass=ilPersonalDesktopGUI',
+                            "link" => "./ilias.php?user=" . $lock_user->getId() . '&cmd=showUserProfile&cmdClass=ilpersonaldesktopgui&baseClass=ilPersonalDesktopGUI',
                         );
                     }
                 }
@@ -1539,6 +1539,7 @@ class ilObjectListGUI
                 $this->tpl->setCurrentBlock("item_title_linked");
                 $this->tpl->setVariable("PREVIEW_STATUS_CLASS", $preview_status_class);
                 $this->tpl->setVariable("SRC_PREVIEW_ICON", ilUtil::getImagePath("preview.png", "Services/Preview"));
+                $this->tpl->setVariable("ALT_PREVIEW_ICON", $this->lng->txt($preview_text_topic));
                 $this->tpl->setVariable("TXT_PREVIEW", $this->lng->txt($preview_text_topic));
                 $this->tpl->setVariable("SCRIPT_PREVIEW_CLICK", $preview->getJSCall($this->getUniqueItemId(true)));
                 $this->tpl->parseCurrentBlock();
@@ -3062,7 +3063,7 @@ class ilObjectListGUI
                             $htpl->setVariable("TAG", "span");
                         }
                         $htpl->setVariable("PROP_ID", $id);
-                        $htpl->setVariable("IMG", ilUtil::img($attr["img"]));
+                        $htpl->setVariable("IMG", ilUtil::img($attr["img"], $attr["tooltip"]));
                         if ($attr["href"] != "") {
                             $htpl->setVariable("PROP_HREF", ' href="' . $attr["href"] . '" ');
                         }
@@ -3149,7 +3150,7 @@ class ilObjectListGUI
                 $om++;
             }
             if ($om != 0 && !$DIC['ilBrowser']->isMobile()) {
-                $this->default_command["frame"]="";
+                $this->default_command["frame"] = "";
                 $a_link = "javascript:void(0); onclick=startSAHS('" . $a_link . "','" . $wtarget . "'," . $om . "," . $width . "," . $height . ");";
             }
         }
@@ -3438,7 +3439,7 @@ class ilObjectListGUI
         }
         
         // BEGIN WEBDAV
-        if ($type=='file' and ilObjFileAccess::_isFileHidden($a_title)) {
+        if ($type == 'file' and ilObjFileAccess::_isFileHidden($a_title)) {
             $this->resetCustomData();
             return "";
         }
@@ -3635,7 +3636,7 @@ class ilObjectListGUI
         $ilUser = $DIC->user();
         
         if ($a_context == self::CONTEXT_REPOSITORY) {
-            $active_notes =	!$ilSetting->get("disable_notes");
+            $active_notes = !$ilSetting->get("disable_notes");
             $active_comments = !$ilSetting->get("disable_comments");
         
             if ($active_notes || $active_comments) {

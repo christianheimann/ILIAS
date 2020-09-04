@@ -574,7 +574,8 @@ class ilObjLanguage extends ilObject
         global $DIC;
         $ilDB = $DIC->database();
 
-        ilGlobalCache::flushAll();
+        // avoid flushing the whole cache (see mantis #28818)
+        ilCachedLanguage::getInstance($a_key)->deleteInCache();
 
         $ilDB->manipulate(sprintf(
             "DELETE FROM lng_modules WHERE lang_key = %s AND module = %s",
@@ -627,7 +628,8 @@ class ilObjLanguage extends ilObject
         global $DIC;
         $ilDB = $DIC->database();
 
-        ilGlobalCache::flushAll();
+        // avoid a cache flush here (see mantis #28818)
+        // ilGlobalCache::flushAll();
 
         if (isset($a_remarks)) {
             $a_remarks = substr($a_remarks, 0, 250);
@@ -646,14 +648,14 @@ class ilObjLanguage extends ilObject
         $ilDB->replace(
             'lng_data',
             array(
-                'module'		=> array('text',$a_module),
-                'identifier'	=> array('text',$a_identifier),
-                'lang_key'		=> array('text',$a_lang_key)
+                'module' => array('text',$a_module),
+                'identifier' => array('text',$a_identifier),
+                'lang_key' => array('text',$a_lang_key)
                 ),
             array(
-                'value'			=> array('text',$a_value),
-                'local_change'	=> array('timestamp',$a_local_change),
-                'remarks'       => array('text', $a_remarks)
+                'value' => array('text',$a_value),
+                'local_change' => array('timestamp',$a_local_change),
+                'remarks' => array('text', $a_remarks)
             )
         );
         return true;
@@ -766,7 +768,7 @@ class ilObjLanguage extends ilObject
     {
         foreach ($content as $key => $val) {
             if (trim($val) == "<!-- language file start -->") {
-                return array_slice($content, $key +1);
+                return array_slice($content, $key + 1);
             }
         }
 

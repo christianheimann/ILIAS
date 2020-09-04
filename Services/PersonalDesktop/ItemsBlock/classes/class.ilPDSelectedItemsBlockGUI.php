@@ -69,7 +69,7 @@ class ilPDSelectedItemsBlockGUI extends ilBlockGUI implements ilDesktopItemHandl
 
         parent::__construct();
 
-        $this->lng  = $DIC->language();
+        $this->lng = $DIC->language();
         $this->ctrl = $DIC->ctrl();
         $this->user = $DIC->user();
 
@@ -240,7 +240,7 @@ class ilPDSelectedItemsBlockGUI extends ilBlockGUI implements ilDesktopItemHandl
     public function executeCommand()
     {
         $next_class = $this->ctrl->getNextClass();
-        $cmd        = $this->ctrl->getCmd('getHTML');
+        $cmd = $this->ctrl->getCmd('getHTML');
 
         switch ($next_class) {
             case 'ilcommonactiondispatchergui':
@@ -398,11 +398,11 @@ class ilPDSelectedItemsBlockGUI extends ilBlockGUI implements ilDesktopItemHandl
                     $html = $item_list_gui->getListItemHTML($item['ref_id'], $item['obj_id'], $item['title'], $item['description']);
                     if ($html != '') {
                         $item_html[] = array(
-                            'html'                 => $html,
-                            'item_ref_id'          => $item['ref_id'],
-                            'item_obj_id'          => $item['obj_id'],
-                            'parent_ref'           => $item['parent_ref'],
-                            'type'                 => $item['type'],
+                            'html' => $html,
+                            'item_ref_id' => $item['ref_id'],
+                            'item_obj_id' => $item['obj_id'],
+                            'parent_ref' => $item['parent_ref'],
+                            'type' => $item['type'],
                             'item_icon_image_type' => $item_list_gui->getIconImageType()
                         );
                     }
@@ -538,7 +538,7 @@ class ilPDSelectedItemsBlockGUI extends ilBlockGUI implements ilDesktopItemHandl
                 global $DIC;
                 /** @var \ilObjectCustomIconFactory  $customIconFactory */
                 $customIconFactory = $DIC['object.customicons.factory'];
-                $customIcon        = $customIconFactory->getByObjId($a_item_obj_id, $a_image_type);
+                $customIcon = $customIconFactory->getByObjId($a_item_obj_id, $a_image_type);
 
                 if ($customIcon->exists()) {
                     $icon = $customIcon->getFullPath();
@@ -554,10 +554,10 @@ class ilPDSelectedItemsBlockGUI extends ilBlockGUI implements ilDesktopItemHandl
         }
         $a_tpl->setCurrentBlock("container_standard_row");
         $a_tpl->setVariable("BLOCK_ROW_CONTENT", $a_html);
-        $rel_headers = ($a_related_header != "")
+        /*$rel_headers = ($a_related_header != "")
         ? "th_selected_items " . $a_related_header
         : "th_selected_items";
-        $a_tpl->setVariable("BLOCK_ROW_HEADERS", $rel_headers);
+        $a_tpl->setVariable("BLOCK_ROW_HEADERS", $rel_headers);*/
         $a_tpl->parseCurrentBlock();
         $a_tpl->touchBlock("container_row");
     }

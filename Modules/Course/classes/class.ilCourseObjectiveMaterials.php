@@ -43,7 +43,7 @@ class ilCourseObjectiveMaterials
 
         $ilDB = $DIC['ilDB'];
 
-        $this->db =&$ilDB;
+        $this->db = &$ilDB;
     
         $this->objective_id = $a_objective_id;
 
@@ -167,7 +167,7 @@ class ilCourseObjectiveMaterials
 
         $tree = $DIC['tree'];
         $ilDB = $DIC['ilDB'];
-        
+
         $container_obj_id = ilObject::_lookupObjId($a_container_id);
         
         $all_materials = $tree->getSubTree($tree->getNodeData($a_container_id), true);
@@ -181,7 +181,7 @@ class ilCourseObjectiveMaterials
                     include_once './Modules/Course/classes/class.ilCourseObjectiveMaterials.php';
                     $type = ilLOTestAssignments::getInstance($container_obj_id)->getTypeByTest($material['child']);
                     if ($type != ilLOSettings::TYPE_TEST_UNDEFINED) {
-                        continue;
+                        break;
                     } else {
                         $assignable[] = $material;
                     }
@@ -190,8 +190,8 @@ class ilCourseObjectiveMaterials
                 case 'crs':
                 case 'rolf':
                 case 'itgr':
-                    continue;
-                
+                    break;
+
                 default:
                     $assignable[] = $material;
                     break;
@@ -437,7 +437,7 @@ class ilCourseObjectiveMaterials
         
         include_once('Modules/Course/classes/class.ilCourseObjective.php');
         $container_ref_ids = ilObject::_getAllReferences(ilCourseObjective::_lookupContainerIdByObjectiveId($this->objective_id));
-        $container_ref_id  = current($container_ref_ids);
+        $container_ref_id = current($container_ref_ids);
         
         // begin-patch lok
         
@@ -481,10 +481,10 @@ class ilCourseObjectiveMaterials
             $writer->xmlElement(
                 'Material',
                 array(
-                    'refId'		=> $material['ref_id'],
-                    'objId'		=> $material['obj_id'],
-                    'type'		=> $material['type'],
-                    'position'	=> $material['position']
+                    'refId' => $material['ref_id'],
+                    'objId' => $material['obj_id'],
+                    'type' => $material['type'],
+                    'position' => $material['position']
                 )
             );
         }

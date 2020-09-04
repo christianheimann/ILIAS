@@ -246,7 +246,7 @@ class ilNoteGUI
     */
     public function enablePublicNotes($a_enable = true)
     {
-        $this->public_enabled =  $a_enable;
+        $this->public_enabled = $a_enable;
     }
 
     /**
@@ -262,7 +262,7 @@ class ilNoteGUI
     */
     public function enablePublicNotesDeletion($a_enable = true)
     {
-        $this->public_deletion_enabled =  $a_enable;
+        $this->public_deletion_enabled = $a_enable;
     }
 
     /**
@@ -604,7 +604,7 @@ class ilNoteGUI
         
         // show add new note button
         if (!$this->add_note_form && !$this->edit_note_form && !$this->delete_note &&
-            !$this->export_html && !$this->print &&	$ilUser->getId() != ANONYMOUS_USER_ID && !$this->hide_new_form) {
+            !$this->export_html && !$this->print && $ilUser->getId() != ANONYMOUS_USER_ID && !$this->hide_new_form) {
             if (!$this->inc_sub) {	// we cannot offer add button if aggregated notes
                 // are displayed
                 if ($this->rep_obj_id > 0 || $a_type != IL_NOTE_PUBLIC) {
@@ -735,6 +735,7 @@ class ilNoteGUI
                     
                     // checkboxes in multiselection mode
                     if ($this->multi_selection && !$this->delete_note) {
+                        $tpl->setVariable("CHECKBOX_CLASS", "ilNotesCheckboxes");
                         $tpl->setCurrentBlock("checkbox_col");
                         $tpl->setVariable("CHK_NOTE", "note[]");
                         $tpl->setVariable("CHK_NOTE_ID", $note->getId());
@@ -1206,7 +1207,7 @@ class ilNoteGUI
 
                             // for references, get original title
                             // (link will lead to orignal, which basically is wrong though)
-                            if ($a_obj_type == "crsr" || $a_obj_type == "catr" ||  $a_obj_type == "grpr") {
+                            if ($a_obj_type == "crsr" || $a_obj_type == "catr" || $a_obj_type == "grpr") {
                                 include_once "Services/ContainerReference/classes/class.ilContainerReference.php";
                                 $tgt_obj_id = ilContainerReference::_lookupTargetId($target["rep_obj_id"]);
                                 $title = ilObject::_lookupTitle($tgt_obj_id);

@@ -138,10 +138,15 @@ class ilLMTracker
      *
      * @param int $a_page_id page id
      */
-    public function trackAccess($a_page_id)
+    public function trackAccess($a_page_id, $user_id)
     {
+        if ($user_id == ANONYMOUS_USER_ID) {
+            ilChangeEvent::_recordReadEvent("lm", $this->lm_ref_id, $this->lm_obj_id, $user_id);
+            return;
+        }
+
         if ($this->lm_ref_id == 0) {
-            die("ilLMTracker: No Ref Id given.");
+            throw new ilLMPresentationException("ilLMTracker: No Ref Id given.");
         }
 
         // track page and chapter access
@@ -254,8 +259,8 @@ class ilLMTracker
             $time_diff = $read_diff = 0;
 
             // spent_seconds or read_count ?
-            if (($now-$pg_ts) <= $valid_timespan) {
-                $time_diff = $now-$pg_ts;
+            if (($now - $pg_ts) <= $valid_timespan) {
+                $time_diff = $now - $pg_ts;
             } else {
                 $read_diff = 1;
             }
@@ -505,7 +510,6 @@ class ilLMTracker
                 $this->tree_arr["nodes"][$a_obj_id]["has_pred_incorrect_answers"] = $a_has_pred_incorrect_answers;
                 $this->tree_arr["nodes"][$a_obj_id]["has_pred_incorrect_not_unlocked_answers"] = $a_has_pred_incorrect_not_unlocked_answers;
             }
-
         } else {	// free pages (currently not called, since only walking through tree structure)
         }
         $this->tree_arr["nodes"][$a_obj_id]["status"] = $status;
